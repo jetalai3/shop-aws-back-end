@@ -1,4 +1,4 @@
-import products from "src/mocks/products"
+import products from "../mocks/products";
 
 const getProducts = () => {
     return Promise.resolve(products);
