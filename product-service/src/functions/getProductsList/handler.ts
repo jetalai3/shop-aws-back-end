@@ -6,10 +6,14 @@ import getProducts from 'src/utils/getProducts';
 import schema from './schema';
 
 const getProductsList: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
-  const productsList = await getProducts();
-  return formatJSONResponse({
-    data: productsList
-  });
+  try {
+    const productsList = await getProducts();
+    return formatJSONResponse({
+      data: productsList
+    });
+  } catch (err) {
+    return formatJSONResponse({ message: 'Unknown error.' }, 500);
+  };
 };
 
 export const main = middyfy(getProductsList);
