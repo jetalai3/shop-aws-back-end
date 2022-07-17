@@ -1,7 +1,7 @@
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
-import getProducts from 'src/utils/getProducts';
+import getProducts from '../../utils/getProducts';
 
 import schema from './schema';
 
