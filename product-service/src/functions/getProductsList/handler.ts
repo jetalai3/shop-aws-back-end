@@ -1,18 +1,26 @@
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
-import getProducts from '../../utils/getProducts';
+import createClient from 'src/utils/createClient';
 
 import schema from './schema';
 
-const getProductsList: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
+const getProductsList: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+  console.log(JSON.stringify(event));
+  const client = createClient();
   try {
-    const productsList = await getProducts();
+
+    await client.connect();
+    const queryResult = await client.query(
+      `SELECT products.*, stocks.count FROM products LEFT JOIN stocks ON products.id=stocks.product_id`
+    );
     return formatJSONResponse({
-      data: productsList
+      data: queryResult.rows
     });
   } catch (err) {
     return formatJSONResponse({ message: 'Unknown error.' }, 500);
+  } finally {
+    client.end();
   };
 };
 
