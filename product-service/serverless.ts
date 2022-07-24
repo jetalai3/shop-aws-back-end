@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import getProductsList from '@functions/getProductsList';
 import getProductById from '@functions/getProductById';
+import createProduct from '@functions/createProduct';
 import config from './config.json';
 
 const serverlessConfiguration: AWS = {
@@ -18,15 +19,11 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      PG_HOST: config.PG_HOST,
-      PG_PORT: config.PG_PORT,
-      PG_DATABASE: config.PG_DATABASE,
-      PG_USERNAME: config.PG_USERNAME,
-      PG_PASSWORD: config.PG_PASSWORD
+      ...config
     },
   },
   // import the function via paths
-  functions: { getProductsList, getProductById },
+  functions: { getProductsList, getProductById, createProduct },
   package: { individually: true },
   custom: {
     esbuild: {
