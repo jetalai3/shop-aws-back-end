@@ -1,0 +1,7 @@
+{
+    "PG_HOST": "your_host_name",
+    "PG_PORT": "your_port",
+    "PG_DATABASE": "your_database_name",
+    "PG_USERNAME": "your_user_name",
+    "PG_PASSWORD": "your_password"
+}

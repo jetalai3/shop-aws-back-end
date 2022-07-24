@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS public.products
 CREATE TABLE IF NOT EXISTS public.stocks
 (
     product_id uuid NOT NULL,
-    count integer
+    count integer CHECK (count > 0)
 );
 
 ALTER TABLE IF EXISTS public.stocks
