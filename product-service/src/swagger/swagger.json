@@ -1,0 +1,94 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is simple react shop back end server.",
+    "version": "1.0.0",
+    "title": "Shop cloud aws.",
+    "contact": {
+      "email": "jetalai3@gmail.com"
+    }
+  },
+  "host": "1fa5y7ihc5.execute-api.us-east-1.amazonaws.com",
+  "basePath": "/dev",
+  "tags": [
+    {
+      "name": "product",
+      "description": "Product info"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/products/{id}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Get product by Id",
+        "description": "",
+        "operationId": "getProductById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of product to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      }
+    },
+    "/products/": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Get list of all products",
+        "description": "",
+        "operationId": "getProductsList",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
