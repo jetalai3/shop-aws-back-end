@@ -4,7 +4,7 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
-    "serverless": "serverless",
+    "serverless": "serverless deploy",
     "test": "jest"
   },
   "engines": {
