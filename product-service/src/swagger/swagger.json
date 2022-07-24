@@ -42,6 +42,12 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Get products success",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
           "404": {
             "description": "Product not found"
           }
@@ -60,8 +66,47 @@
           "application/json"
         ],
         "responses": {
-          "404": {
-            "description": "Product not found"
+          "200": {
+            "description": "Get products success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Product"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Create a new product",
+        "description": "",
+        "operationId": "createProduct",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Product data to create new product",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Create product success",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "description": "Invalid body data"
           }
         }
       }
