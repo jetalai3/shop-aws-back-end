@@ -5,11 +5,13 @@ import csvParser from 'csv-parser';
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
+import { BUCKET_NAME, UPLOAD_FOLDER, PARSED_FOLDER, REGION } from '../../../config.json';
+
 const importFileParser = async (event: S3Event) => {
   try {
     console.log(`START parsing products from event: ${JSON.stringify(event)}`);
 
-    const s3Instance = new S3({ region: 'us-east-1' });
+    const s3Instance = new S3({ region: REGION });
 
     const records = event.Records; 
     const recordsWithData = records.filter(
@@ -49,15 +51,15 @@ const importFileParser = async (event: S3Event) => {
       console.log(`Start copying object: ${record}`);
 
       await s3Instance.copyObject({
-        Bucket: 'import-service-bucket-jetalai',
-        CopySource: `import-service-bucket-jetalai/${record.s3.object.key}`,
-        Key: record.s3.object.key.replace('uploaded', 'parsed')
+        Bucket: BUCKET_NAME,
+        CopySource: `${BUCKET_NAME}/${record.s3.object.key}`,
+        Key: record.s3.object.key.replace(UPLOAD_FOLDER, PARSED_FOLDER)
       }).promise();
       
       console.log(`Start deleting object: ${record}`);
 
       await s3Instance.deleteObject({
-        Bucket: 'import-service-bucket-jetalai',
+        Bucket: BUCKET_NAME,
         Key: record.s3.object.key
       }).promise();
       

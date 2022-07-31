@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import importProductsFile from '@functions/importProductsFile';
 import importFileParser from '@functions/importFileParser';
+import config from './config.json';
 
 const serverlessConfiguration: AWS = {
   service: 'import-service',
@@ -62,7 +63,7 @@ const serverlessConfiguration: AWS = {
 			ImportedFilesBucket: {
 				Type: 'AWS::S3::Bucket',
 				Properties: {
-					BucketName: 'import-service-bucket-jetalai',
+					BucketName: config.BUCKET_NAME,
 					CorsConfiguration: {
 						CorsRules: [
 							{
