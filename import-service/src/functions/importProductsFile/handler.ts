@@ -1,4 +1,4 @@
-import { S3 } from "aws-sdk";
+import { S3 } from 'aws-sdk';
 
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJSONResponse } from '@libs/api-gateway';
@@ -12,11 +12,11 @@ const importProductsFile: ValidatedEventAPIGatewayProxyEvent<typeof schema> = as
 
     const s3Instance = new S3({ region: 'us-east-1' });
 
-    const urlForUpload = await s3Instance.getSignedUrlPromise("putObject", {
+    const urlForUpload = await s3Instance.getSignedUrlPromise('putObject', {
       Bucket: 'import-service-bucket-jetalai',
       Key: `uploaded/${fileName}`,
       Expires: 60,
-      ContentType: "text/csv",
+      ContentType: 'text/csv',
     });
 
     return formatJSONResponse({
@@ -25,7 +25,7 @@ const importProductsFile: ValidatedEventAPIGatewayProxyEvent<typeof schema> = as
   } catch (error) {
     return formatJSONResponse(
       {
-        message: "Unknown error",
+        message: 'Unknown error',
       },
       500
     );
