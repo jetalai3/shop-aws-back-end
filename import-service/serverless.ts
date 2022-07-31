@@ -67,7 +67,7 @@ const serverlessConfiguration: AWS = {
 						CorsRules: [
 							{
 								AllowedHeaders: ['*'],
-								AllowedMethods: ['PUT'],
+								AllowedMethods: ['PUT', 'DELETE'],
 								AllowedOrigins: ['*'],
 							},
 						],

@@ -44,6 +44,26 @@ const importFileParser = async (event: S3Event) => {
     );
 
     await Promise.allSettled(recordPromiseArray);
+
+    records.forEach(async (record) => {
+      console.log(`Start copying object: ${record}`);
+
+      await s3Instance.copyObject({
+        Bucket: 'import-service-bucket-jetalai',
+        CopySource: `import-service-bucket-jetalai/${record.s3.object.key}`,
+        Key: record.s3.object.key.replace('uploaded', 'parsed')
+      }).promise();
+      
+      console.log(`Start deleting object: ${record}`);
+
+      await s3Instance.deleteObject({
+        Bucket: 'import-service-bucket-jetalai',
+        Key: record.s3.object.key
+      }).promise();
+      
+      console.log(`Deleted object: ${record}`);
+    });
+    
     return formatJSONResponse({
       message: 'Finish parsing products',
     });
