@@ -19,6 +19,9 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+	  SQS_URL: {
+		"Fn::ImportValue": "product-service-dev-CatalogBatchSimpleQueue",
+	  },
     },
     iamRoleStatements: [
 			{
@@ -39,6 +42,13 @@ const serverlessConfiguration: AWS = {
 						'',
 						[{ 'Fn::GetAtt': ['ImportedFilesBucket', 'Arn'] }, '/*'],
 					],
+				},
+			},
+			{
+				Effect: "Allow",
+				Action: "sqs:*",
+				Resource: {
+					"Fn::ImportValue": "product-service-dev-CatalogBatchSimpleQueueArn",
 				},
 			},
 		],
