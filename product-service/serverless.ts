@@ -3,10 +3,10 @@ import type { AWS } from '@serverless/typescript';
 import getProductsList from '@functions/getProductsList';
 import getProductById from '@functions/getProductById';
 import createProduct from '@functions/createProduct';
-import catalogBatchProcess from "@functions/catalogBatchProcess";
+import catalogBatchProcess from '@functions/catalogBatchProcess';
 import config from './config.json';
-import sqsConfig from "./sqsConfig.json";
-import snsConfig from "./snsConfig.json";
+import sqsConfig from './sqsConfig.json';
+import snsConfig from './snsConfig.json';
 
 const serverlessConfiguration: AWS = {
   service: 'product-service',
@@ -22,14 +22,14 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      SNS_ARN: { Ref: "CatalogBatchSimpleNotificationsTopic" },
+      SNS_ARN: { Ref: 'CatalogBatchSimpleNotificationsTopic' },
       ...config
     },
     iamRoleStatements: [
 			{
-				Effect: "Allow",
-				Action: "sns:*",
-				Resource: { Ref: "CatalogBatchSimpleNotificationsTopic" },
+				Effect: 'Allow',
+				Action: 'sns:*',
+				Resource: { Ref: 'CatalogBatchSimpleNotificationsTopic' },
 			},
 		],
   },
@@ -39,7 +39,7 @@ const serverlessConfiguration: AWS = {
     events: [
       {
         sqs: {
-          arn: { "Fn::GetAtt": ["CatalogBatchSimpleQueue", "Arn"] },
+          arn: { 'Fn::GetAtt': ['CatalogBatchSimpleQueue', 'Arn'] },
           batchSize: 5,
         },
       },
@@ -61,37 +61,37 @@ const serverlessConfiguration: AWS = {
   resources: {
 		Resources: {
 			CatalogBatchSimpleQueue: {
-				Type: "AWS::SQS::Queue",
+				Type: 'AWS::SQS::Queue',
 				Properties: {
 					QueueName: sqsConfig.QUEUE_NAME,
 				},
 			},
 			CatalogBatchSimpleNotificationsTopic: {
-				Type: "AWS::SNS::Topic",
+				Type: 'AWS::SNS::Topic',
 				Properties: {
 					TopicName: snsConfig.TOPIC_NAME,
 				},
 			},
 			CatalogBatchSimpleNotificationsSuscription: {
-				Type: "AWS::SNS::Subscription",
+				Type: 'AWS::SNS::Subscription',
 				Properties: {
-					Protocol: "email",
+					Protocol: 'email',
 					Endpoint: snsConfig.ENDPOINT,
-					TopicArn: { Ref: "CatalogBatchSimpleNotificationsTopic" },
+					TopicArn: { Ref: 'CatalogBatchSimpleNotificationsTopic' },
 				},
 			},
 		},
 		Outputs: {
 			CatalogBatchSimpleQueueUrl: {
-				Value: { Ref: "CatalogBatchSimpleQueue" },
+				Value: { Ref: 'CatalogBatchSimpleQueue' },
 				Export: {
-					Name: { "Fn::Sub": "${AWS::StackName}-CatalogBatchSimpleQueue" },
+					Name: { 'Fn::Sub': '${AWS::StackName}-CatalogBatchSimpleQueue' },
 				},
 			},
 			CatalogBatchSimpleQueueArn: {
-				Value: { "Fn::GetAtt": ["CatalogBatchSimpleQueue", "Arn"] },
+				Value: { 'Fn::GetAtt': ['CatalogBatchSimpleQueue', 'Arn'] },
 				Export: {
-					Name: { "Fn::Sub": "${AWS::StackName}-CatalogBatchSimpleQueueArn" },
+					Name: { 'Fn::Sub': '${AWS::StackName}-CatalogBatchSimpleQueueArn' },
 				},
 			},
 		},
