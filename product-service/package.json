@@ -4,7 +4,7 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
-    "serverless": "serverless deploy",
+    "serverless:deploy": "serverless deploy --stage dev",
     "test": "jest"
   },
   "engines": {
@@ -13,6 +13,7 @@
   "dependencies": {
     "@middy/core": "^2.5.3",
     "@middy/http-json-body-parser": "^2.5.3",
+    "aws-sdk": "^2.1189.0",
     "pg": "^8.7.3"
   },
   "devDependencies": {
