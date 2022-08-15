@@ -8,6 +8,4 @@ jspm_packages
 # esbuild directories
 .esbuild
 
-config.json
-snsConfig.json
-sqsConfig.json
+.env

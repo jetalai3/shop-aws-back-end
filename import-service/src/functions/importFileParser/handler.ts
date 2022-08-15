@@ -1,4 +1,4 @@
-import { S3 } from 'aws-sdk';
+import { S3, SQS } from 'aws-sdk';
 import { S3Event } from 'aws-lambda';
 import csvParser from 'csv-parser';
 
@@ -12,6 +12,8 @@ const importFileParser = async (event: S3Event) => {
     console.log(`START parsing products from event: ${JSON.stringify(event)}`);
 
     const s3Instance = new S3({ region: REGION });
+    const sqsInstance = new SQS();
+    const queueUrl = process.env.SQS_URL;
 
     const records = event.Records; 
     const recordsWithData = records.filter(
@@ -28,7 +30,13 @@ const importFileParser = async (event: S3Event) => {
 
         const recordProcessingPromises = [];
         const logRecord = async (data) => {
-          console.log(`Product: ${JSON.stringify(data)}`);
+          console.log(`Product: ${JSON.stringify(data)}`)
+          await sqsInstance
+								.sendMessage({
+									QueueUrl: queueUrl,
+									MessageBody: JSON.stringify(data),
+								})
+								.promise();;
         }
         productParsingStream.on('data', (data) => {
           recordProcessingPromises.push(logRecord(data));

@@ -1,10 +1,10 @@
 {
-  "name": "import-service",
+  "name": "authorization-service",
   "version": "1.0.0",
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
-    "test": "jest",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "serverless:deploy": "serverless deploy --stage dev"
   },
   "engines": {
@@ -13,21 +13,17 @@
   "dependencies": {
     "@middy/core": "^2.5.3",
     "@middy/http-json-body-parser": "^2.5.3",
-    "aws-sdk": "^2.1185.0",
-    "csv-parser": "^3.0.0"
+    "aws-sdk": "^2.1194.0"
   },
   "devDependencies": {
-    "@serverless/typescript": "^3.21.0",
-    "@types/aws-lambda": "^8.10.101",
-    "@types/jest": "^28.1.6",
+    "@serverless/typescript": "^3.0.0",
+    "@types/aws-lambda": "^8.10.71",
     "@types/node": "^14.14.25",
-    "aws-sdk-mock": "^5.7.0",
     "esbuild": "^0.14.11",
-    "jest": "^28.1.3",
     "json-schema-to-ts": "^1.5.0",
     "serverless": "^3.0.0",
+    "serverless-dotenv-plugin": "^4.0.1",
     "serverless-esbuild": "^1.23.3",
-    "ts-jest": "^28.0.7",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.1.3"
